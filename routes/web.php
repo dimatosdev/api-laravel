@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,3 +78,10 @@ Route::get('/', function () {
 Route::get('hello/{name}', function ($name) {
     return view('hello', compact('name'));
 });
+
+/* Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+
+Route::post('/users/', [UserController::class, 'save']); */
+
+Route::resource('/users', UserController::class);
