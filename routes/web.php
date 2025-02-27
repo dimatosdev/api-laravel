@@ -76,7 +76,8 @@ Route::get('/', function () {
 });
 
 Route::get('hello/{name}', function ($name) {
-    return view('hello', compact('name'));
+    //return view('hello', compact('name'));
+    return redirect()->route('products_single');
 });
 
 /* Route::get('/users', [UserController::class, 'index']);
@@ -84,4 +85,28 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 
 Route::post('/users/', [UserController::class, 'save']); */
 
-Route::resource('/users', UserController::class);
+//Route::resource('/users', UserController::class);
+
+
+Route::namespace('Test')->group( function(){
+    Route::get('/users/{id}', [UserController::class, 'show']);
+});
+
+
+Route::prefix('products')->name('products_')->group(function(){
+    Route::get('/', function(){
+        return 'Produtos Index';
+    })->name('index'); /* products_index */
+
+    Route::get('/1', function(){
+        return 'Produtos 1';
+    })->name('single'); /* products_single */
+});
+
+Route::view('/view', 'view', ['name'=> 'diego']);
+
+Route::get('show/{name?}/{sobrenome?}', function ($name =  null, $sobrenome = null) {
+    if(is_null($name))
+        return 'Informe um nome';
+    return $name. ' ' . $sobrenome;
+});
