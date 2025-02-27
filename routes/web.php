@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +102,12 @@ Route::prefix('products')->name('products_')->group(function(){
     })->name('single'); /* products_single */
 });
 
-Route::view('/view', 'view', ['name'=> 'diego']);
+Route::group(['middleware' => ['teste']], function(){
+    Route::get('middle', function(){return 'middle';});
+    Route::get('middle2', function(){return 'middle2';});
+});
+
+Route::view('/view', 'view', ['name'=> 'diego'])->middleware(\App\Http\Middleware\TestCheck::class);
 
 Route::get('show/{name?}/{sobrenome?}', function ($name =  null, $sobrenome = null) {
     if(is_null($name))

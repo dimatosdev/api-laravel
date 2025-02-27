@@ -45,10 +45,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $headers=$request->headers->get('user-agent');
+        dd($headers);
+        $nome = $request->query('name');
+        print($nome);
         $users = User::findOrFail($id);
-        return $users;
+        return response($users , 200)
+        ->withHeaders(['Content-Type'=>'application/json']);
     }
 
     /**
