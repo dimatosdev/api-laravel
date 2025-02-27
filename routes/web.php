@@ -70,14 +70,12 @@ Route::get('/', function () {
     $user->delete(); */
 
 
-
-
     return view('welcome');
 });
 
-Route::get('hello/{name}', function ($name) {
-    //return view('hello', compact('name'));
-    return redirect()->route('products_single');
+Route::get('hello/{name?}', function ($name = null) {
+    return view('welcome', compact('name'));
+    //return redirect()->route('products_single');
 });
 
 /* Route::get('/users', [UserController::class, 'index']);
